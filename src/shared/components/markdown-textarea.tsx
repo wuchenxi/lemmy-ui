@@ -203,6 +203,14 @@ export class MarkdownTextArea extends Component<
             >
               <Icon icon="link" classes="icon-inline" />
             </button>
+           <button
+              class="btn btn-sm text-muted"
+              data-tippy-content={"turn into tag"}
+              aria-label={"turn into tag"}
+              onClick={linkEvent(this, this.handleInsertTag)}
+            >
+              #
+            </button>            
             <form class="btn btn-sm text-muted font-weight-bold">
               <label
                 htmlFor={`file-upload-${this.id}`}
@@ -422,6 +430,33 @@ export class MarkdownTextArea extends Component<
     i.contentChange();
     i.setState(i.state);
   }
+
+  handleInsertTag(i: MarkdownTextArea, event: any) {
+    event.preventDefault();
+    if (!i.state.content) {
+      i.state.content = "";
+    }
+    let textarea: any = document.getElementById(i.id);
+    let start: number = textarea.selectionStart;
+    let end: number = textarea.selectionEnd;
+
+    if (start !== end) {
+      let selectedText = i.state.content.substring(start, end);
+      i.state.content = `${i.state.content.substring(
+        0,
+        start
+      )}[${selectedText}](../../search/q/${selectedText}/type/All/sort/TopAll/listing_type/All/community_id/0/creator_id/0/page/1)${i.state.content.substring(end)}`;
+      textarea.focus();
+      setTimeout(() => (textarea.selectionEnd = end + 3), 10);
+    } else {
+      i.state.content += "[]()";
+      textarea.focus();
+      setTimeout(() => (textarea.selectionEnd -= 1), 10);
+    }
+    i.contentChange();
+    i.setState(i.state);
+  }
+
 
   simpleSurround(chars: string) {
     this.simpleSurroundBeforeAfter(chars, chars);
