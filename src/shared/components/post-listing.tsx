@@ -77,15 +77,6 @@ interface PostListingProps {
   enableNsfw: boolean;
 }
 
-function hashtagged(s: string){
-  const hashtags = s.match(/\B\#\w\w+\b/g);
-  for (const tag of hashtags){
-    const tagregex = new RegExp(tag, "g");
-    s=s.replace(tagregex, "[" + tag + "](../../search/q/%23" + tag.slice(1) + "/type/All/sort/TopAll/listing_type/All/community_id/0/creator_id/0/page/1)"); 
-  }
-  return s;
-}
-
 export class PostListing extends Component<PostListingProps, PostListingState> {
   private emptyState: PostListingState = {
     showEdit: false,
@@ -168,7 +159,7 @@ export class PostListing extends Component<PostListingProps, PostListingState> {
             ) : (
               <div
                 className="md-div"
-                dangerouslySetInnerHTML={mdToHtml(hashtagged(post.body))}
+                dangerouslySetInnerHTML={mdToHtml(post.body)}
               />
             ))}
         </div>
