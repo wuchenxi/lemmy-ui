@@ -75,6 +75,29 @@ interface PostState {
   siteRes: GetSiteResponse;
 }
 
+
+function clickTweet(){
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20 ' + encodeURIComponent(document.URL));
+}
+
+function clickFaceBook(){
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL));
+}
+
+function clickTelegram(){
+  window.open('https://telegram.me/share/url?text=' + encodeURIComponent(document.title) + '&url=' + encodeURIComponent(document.URL));
+}
+
+function clickEmail(){
+  window.open('mailto:?subject=' + encodeURIComponent(document.title) + '&body=' + encodeURIComponent(document.URL));
+}
+
+
+function clickLine(){
+  window.open('https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(document.URL)); 
+}
+
+
 export class Post extends Component<any, PostState> {
   private subscription: Subscription;
   private isoData = setIsoData(this.context);
@@ -276,6 +299,8 @@ export class Post extends Component<any, PostState> {
                 enableNsfw={this.state.siteRes.site_view.site.enable_nsfw}
               />
               <div className="mb-2" />
+              <p><a class="twitter-share-button" id="tweet" href="#" onclick={clickTweet}>Tweet</a> | <a class="facebook-share-button" id="fb-share" href="#" onclick={clickFaceBook}>Facebook</a> | <a class="telegram-share-button" id="tg-share" href="#" onclick={clickTelegram}>Telegram</a> | <a class="email-share-button" id="email-share" href="#" onclick={clickEmail}>Email</a> | <a class="line-share-button" id="line-share" href="#" onclick={clickLine}>Line</a></p>
+
               <CommentForm
                 postId={this.state.postId}
                 disabled={pv.post.locked}
