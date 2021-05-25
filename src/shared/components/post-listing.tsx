@@ -77,8 +77,9 @@ interface PostListingProps {
   enableNsfw: boolean;
 }
 
-function hashtagged(s){
+function hashtagged(s: string){
   var hashpattern = /(?<=\s|^|\n)\#\w\w+\b/gm;
+  var match;
   while (match = hashpattern.exec(s)) {
     let tag = s.substring(match.index, hashpattern.lastIndex);
     s=`${s.substring(0, match.index)}[${tag}](../../search/q/${encodeURIComponent(tag)}/type/All/sort/TopAll/listing_type/All/community_id/0/creator_id/0/page/1)${s.substring(hashpattern.lastIndex)}`;
