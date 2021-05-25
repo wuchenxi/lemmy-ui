@@ -77,6 +77,15 @@ interface PostListingProps {
   enableNsfw: boolean;
 }
 
+function hashtagged(s){
+  var hashpattern = /(?<=\s|^|\n)\#\w\w+\b/gm;
+  while (match = hashpattern.exec(s)) {
+    let tag = s.substring(match.index, hashpattern.lastIndex);
+    s=`${s.substring(0, match.index)}[${tag}](../../search/q/${encodeURIComponent(tag)}/type/All/sort/TopAll/listing_type/All/community_id/0/creator_id/0/page/1)${s.substring(hashpattern.lastIndex)}`;
+  }
+  return s;
+}
+
 export class PostListing extends Component<PostListingProps, PostListingState> {
   private emptyState: PostListingState = {
     showEdit: false,
@@ -159,7 +168,7 @@ export class PostListing extends Component<PostListingProps, PostListingState> {
             ) : (
               <div
                 className="md-div"
-                dangerouslySetInnerHTML={mdToHtml(post.body)}
+                dangerouslySetInnerHTML={mdToHtml(hashtagged(post.body))}
               />
             ))}
         </div>
