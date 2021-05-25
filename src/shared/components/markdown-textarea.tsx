@@ -445,7 +445,7 @@ export class MarkdownTextArea extends Component<
       i.state.content = `${i.state.content.substring(
         0,
         start
-      )}[${selectedText}](../../search/q/${selectedText}/type/All/sort/TopAll/listing_type/All/community_id/0/creator_id/0/page/1)${i.state.content.substring(end)}`;
+      )}[${selectedText}](../../search/q/${encodeURIComponent(selectedText)}/type/All/sort/TopAll/listing_type/All/community_id/0/creator_id/0/page/1)${i.state.content.substring(end)}`;
       textarea.focus();
       setTimeout(() => (textarea.selectionEnd = end + 3), 10);
     } else {
