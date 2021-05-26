@@ -36,21 +36,6 @@ interface MarkdownTextAreaState {
   loading: boolean;
   imageLoading: boolean;
 }
-
-function hashtagged(s: string){
-  var hashpattern = /(?:\s|^|\n)\#\w\w+\b/gm;
-  var match;
-  while (match = hashpattern.exec(s)) {
-    var begin=match.index;
-    var head=s.charAt(begin);
-    if(head==' ' || head=='\n'){
-      begin+=1;
-    }
-    let tag = s.substring(begin, hashpattern.lastIndex);
-    s=`${s.substring(0, begin)}[${tag}](../../search/q/${encodeURIComponent(tag)}/type/All/sort/TopAll/listing_type/All/community_id/0/creator_id/0/page/1)${s.substring(hashpattern.lastIndex)}`;
-  }
-  return s;
-}  
   
 export class MarkdownTextArea extends Component<
   MarkdownTextAreaProps,
@@ -404,7 +389,7 @@ export class MarkdownTextArea extends Component<
     event.preventDefault();
     i.state.loading = true;
     i.setState(i.state);
-    let msg = { val: hashtagged(i.state.content), formId: i.formId };
+    let msg = { val: i.state.content, formId: i.formId };
     i.props.onSubmit(msg);
   }
 
