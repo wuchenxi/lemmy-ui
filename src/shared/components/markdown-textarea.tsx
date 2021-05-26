@@ -37,6 +37,21 @@ interface MarkdownTextAreaState {
   imageLoading: boolean;
 }
 
+function hashtagged(s: string){
+  var hashpattern = /(?:\s|^|\n)\#\w\w+\b/gm;
+  var match;
+  while (match = hashpattern.exec(s)) {
+    var begin=match.index;
+    var head=s.charAt(begin);
+    if(head==' ' || head=='\n'){
+      begin+=1;
+    }
+    let tag = s.substring(begin, hashpattern.lastIndex);
+    s=`${s.substring(0, begin)}[${tag}](../../search/q/${encodeURIComponent(tag)}/type/All/sort/TopAll/listing_type/All/community_id/0/creator_id/0/page/1)${s.substring(hashpattern.lastIndex)}`;
+  }
+  return s;
+}  
+  
 export class MarkdownTextArea extends Component<
   MarkdownTextAreaProps,
   MarkdownTextAreaState
@@ -202,15 +217,7 @@ export class MarkdownTextArea extends Component<
               onClick={linkEvent(this, this.handleInsertLink)}
             >
               <Icon icon="link" classes="icon-inline" />
-            </button>
-           <button
-              class="btn btn-sm text-muted"
-              data-tippy-content={"turn into tag"}
-              aria-label={"turn into tag"}
-              onClick={linkEvent(this, this.handleInsertTag)}
-            >
-              #
-            </button>            
+            </button>         
             <form class="btn btn-sm text-muted font-weight-bold">
               <label
                 htmlFor={`file-upload-${this.id}`}
@@ -397,7 +404,7 @@ export class MarkdownTextArea extends Component<
     event.preventDefault();
     i.state.loading = true;
     i.setState(i.state);
-    let msg = { val: i.state.content, formId: i.formId };
+    let msg = { val: hashtagged(i.state.content), formId: i.formId };
     i.props.onSubmit(msg);
   }
 
@@ -430,33 +437,6 @@ export class MarkdownTextArea extends Component<
     i.contentChange();
     i.setState(i.state);
   }
-
-  handleInsertTag(i: MarkdownTextArea, event: any) {
-    event.preventDefault();
-    if (!i.state.content) {
-      i.state.content = "";
-    }
-    let textarea: any = document.getElementById(i.id);
-    let start: number = textarea.selectionStart;
-    let end: number = textarea.selectionEnd;
-
-    if (start !== end) {
-      let selectedText = i.state.content.substring(start, end);
-      i.state.content = `${i.state.content.substring(
-        0,
-        start
-      )}[${selectedText}](../../search/q/${encodeURIComponent(selectedText)}/type/All/sort/TopAll/listing_type/All/community_id/0/creator_id/0/page/1)${i.state.content.substring(end)}`;
-      textarea.focus();
-      setTimeout(() => (textarea.selectionEnd = end + 3), 10);
-    } else {
-      i.state.content += "[]()";
-      textarea.focus();
-      setTimeout(() => (textarea.selectionEnd -= 1), 10);
-    }
-    i.contentChange();
-    i.setState(i.state);
-  }
-
 
   simpleSurround(chars: string) {
     this.simpleSurroundBeforeAfter(chars, chars);
