@@ -97,19 +97,19 @@ function clickLine(){
 }
 
 function clickTumblr(){
-  window.open('https://www.tumblr.com/widgets/share/tool?posttype=link&title=' + encodeURIComponent(document.title) + '&caption=' + encodeURIComponent(document.title) + '&content=' + encodeURIComponent(document.URI) + '&canonicalUrl=' + encodeURIComponent(document.URI));
+  window.open('https://www.tumblr.com/widgets/share/tool?posttype=link&title=' + encodeURIComponent(document.title) + '&caption=' + encodeURIComponent(document.title) + '&content=' + encodeURIComponent(document.URL) + '&canonicalUrl=' + encodeURIComponent(document.URL));
 }
 
 function clickReddit(){
-  window.open('https://reddit.com/submit/?url=' + encodeURIComponent(document.URI) + '&resubmit=true&title=' + encodeURIComponent(document.title));
+  window.open('https://reddit.com/submit/?url=' + encodeURIComponent(document.URL) + '&resubmit=true&title=' + encodeURIComponent(document.title));
 }
 
 function clickLinkedin(){
-  window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(document.URI) + '&title=' + encodeURIComponent(document.title) + '&summary=' + encodeURIComponent(document.title) + '&source=' + encodeURIComponent(document.URI));
+  window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(document.URL) + '&title=' + encodeURIComponent(document.title) + '&summary=' + encodeURIComponent(document.title) + '&source=' + encodeURIComponent(document.URL));
 }
 
 function clickWhatsapp(){
-  window.open('whatsapp://send?text=' + encodeURIComponent(document.URI));
+  window.open('whatsapp://send?text=' + encodeURIComponent(document.URL));
 }
 
 export class Post extends Component<any, PostState> {
