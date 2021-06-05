@@ -97,7 +97,7 @@ function clickLine(){
 }
 
 function clickTumblr(){
-  window.open('https://www.tumblr.com/widgets/share/tool?posttype=link&title=' + encodeURIComponent(document.title) + '&caption=' + encodeURIComponent(document.title) '&content=' +  encodeURIComponent(document.URI) + '&canonicalUrl=' + encodeURIComponent(document.URI));
+  window.open('https://www.tumblr.com/widgets/share/tool?posttype=link&title=' + encodeURIComponent(document.title) + '&caption=' + encodeURIComponent(document.title) + '&content=' + encodeURIComponent(document.URI) + '&canonicalUrl=' + encodeURIComponent(document.URI));
 }
 
 function clickReddit(){
