@@ -6,5 +6,7 @@ Based off of MrFoxPro's [inferno-isomorphic-template](https://github.com/MrFoxPr
 
 
 git clone --branch release/v0.12 https://github.com/LemmyNet/lemmy-ui.git --recursive
+
 Edit utils and post files
+
 Then docker build . -t lemmy-ui-mod
